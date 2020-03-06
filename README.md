@@ -1,5 +1,7 @@
 # filter-subtitles
-Filter `.srt` files to remove SDH (Deaf or Hard-of-Hearing) entries and other tags.
+[![Build Status](https://travis-ci.com/mattlyon93/filter-subs.svg?branch=master)](https://travis-ci.com/mattlyon93/filter-subs) [![Coverage Status](https://coveralls.io/repos/github/mattlyon93/filter-subs/badge.svg?branch=master)](https://coveralls.io/github/mattlyon93/filter-subs?branch=master) 
+
+Filter `.srt` subtitle files to remove SDH (Deaf or Hard-of-Hearing) entries and other tags.
 
 ## Installation
 ```
@@ -54,7 +56,7 @@ Custom filter flags.
 ### Module Usage
 Filter a subtitle in place (overw.rites original subtitle) with default options
 ```python
-from subtitle_filter.lib.subtitle import Subtitles
+from subtitle_filter import Subtitles
 
 subs = Subtitles('/path/to/sub.srt')
 subs.filter()

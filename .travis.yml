@@ -7,6 +7,7 @@ python:
 
 # command to install dependencies
 install:
-  - pip install coverage .
+  - pip install coverage coveralls .
 # command to run tests
 script: "coverage run -m unittest discover tests/ '*_test.py'"
+after_success: "coveralls"

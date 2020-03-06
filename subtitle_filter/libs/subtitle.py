@@ -173,7 +173,6 @@ class Subtitles(MediaFile):
         with open(self.filepath, 'r') as fp:
             line_list = fp.readlines()
         line_list_filtered = [x.rstrip() for x in line_list]
-        
         return line_list_filtered
 
     def _parse_subs(self):
