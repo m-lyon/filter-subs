@@ -10,7 +10,7 @@ setup(
     author_email='matthewlyon18@gmail.com',
     python_requires='>=3.6',
     license='MIT License',
-    packages=['subtitle_filter', 'subtitle_filter/lib'],
+    packages=['subtitle_filter', 'subtitle_filter/libs'],
     classifiers=[
         'Programming Language :: Python',
         'Operating System :: Unix',
