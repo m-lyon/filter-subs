@@ -3,7 +3,7 @@ import unittest
 
 from os.path import join, dirname
 
-from subtitle_filter.lib.subtitle import Subtitles
+from subtitle_filter.libs.subtitle import Subtitles
 
 DATA_DIR = join(dirname(__file__), 'data')
 
