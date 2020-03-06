@@ -25,8 +25,8 @@ setup(
         'Programming Language :: Python',
         'Operating System :: Unix',
         'Operating System :: MacOS',
-        'Text Processing :: Filters',
-        'Multimedia :: Sound/Audio :: Speech'
+        'Topic :: Text Processing :: Filters',
+        'Topic :: Multimedia :: Sound/Audio :: Speech'
     ],
     keywords=['subtitle', 'SDH', 'hard-of-hearing', 'filter', 'movie', 'tv'],
     scripts=['subtitle_filter/bin/filter-subtitles.py']

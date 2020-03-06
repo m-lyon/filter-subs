@@ -1,15 +1,15 @@
-# filter-subtitles
+# subtitle-filter
 [![Build Status](https://travis-ci.com/mattlyon93/filter-subs.svg?branch=master)](https://travis-ci.com/mattlyon93/filter-subs) [![Coverage Status](https://coveralls.io/repos/github/mattlyon93/filter-subs/badge.svg?branch=master)](https://coveralls.io/github/mattlyon93/filter-subs?branch=master) 
 
 Filter `.srt` subtitle files to remove SDH (Deaf or Hard-of-Hearing) entries and other tags.
 
 ## Installation
 ```
-pip install filter-subtitles
+pip install subtitle-filter
 ```
 
 ## Usage
-`filter-subtitles` can be used either as a script or a module.
+`subtitle-filter` can be used either as a script or a module.
 
 By default, this module filters the following (in order):
 
