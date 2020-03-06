@@ -12,9 +12,9 @@ pip install filter-subtitles
 By default, this module filters the following (in order):
 
 1. Removes font tags e.g. `<font color="#DF01D7">(GUN COCKS)\</font>`.
-2. Removes Subtitle entries containing asterisks: `*`.
-3. Removes Music tags `♪` and text contained within two music tags.
-4. Removes Sound effects: text contained with and including parenthesis `(BANG)` and brackets `[boom]`.
+2. Removes subtitle entries containing asterisks: `*`.
+3. Removes music tags `♪` and text contained within two music tags.
+4. Removes sound effects: text contained with and including parenthesis `(BANG)` and brackets `[boom]`.
 5. Replaces capitalized names with dashes, e.g. `GARY: Hey` to `- Hey`.
 6. Removes author tags such as `XoXo Subtitles by PwnedDude967 XoXo`.
 
@@ -36,7 +36,7 @@ filter-subtitles.py -s /path/to/sub.srt -p
 
 Save the output to a different filepath.
 ```bash
-filter-subtitles.py -s /path/to/sub.srt -p -o /path/to/outsub.srt
+filter-subtitles.py -s /path/to/sub.srt -o /path/to/outsub.srt
 ```
 
 Custom filter flags.
