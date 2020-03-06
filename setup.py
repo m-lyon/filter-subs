@@ -8,7 +8,7 @@ setup(
     description='Filter SDH entries and more from .srt files',
     author='Matt Lyon',
     author_email='matthewlyon18@gmail.com',
-    python_requires='>=3.6',
+    python_requires='>=3.4',
     license='MIT License',
     packages=['subtitle_filter', 'subtitle_filter/libs'],
     classifiers=[
