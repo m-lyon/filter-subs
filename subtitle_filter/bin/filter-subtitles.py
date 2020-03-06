@@ -3,7 +3,7 @@
 
 import argparse
 
-from subtitle_filter.lib.subtitle import Subtitles
+from subtitle_filter.libs.subtitle import Subtitles
 
 
 def run(args):
