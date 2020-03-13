@@ -1,7 +1,6 @@
 '''Module containing Subtitle and Subtitles classes'''
+import os
 import re
-
-from subtitle_filter.libs.media import MediaFile
 
 
 class Subtitle:
@@ -13,6 +12,7 @@ class Subtitle:
     def __init__(self):
         self._index = None
         self._contents = ''
+
         self.start = None
         self.end = None
 
@@ -28,13 +28,11 @@ class Subtitle:
 
     def _contents_to_list(self):
         if isinstance(self._contents, str):
-            contents_list = self._contents.split('\n')
-            self._contents = contents_list
+            self._contents = self._contents.split('\n')
 
     def _contents_to_str(self):
         if isinstance(self._contents, list):
-            contents_str = '\n'.join(self._contents)
-            self._contents = contents_str
+            self._contents = '\n'.join(self._contents)
 
     @property
     def index(self):
@@ -89,8 +87,11 @@ class Subtitle:
 
     def remove_music(self):
         '''Removes music symbols from contents'''
-        self._contents = re.sub('♪(.*)♪', '', self._contents, flags=re.DOTALL)
-        self._contents = re.sub('♪', '', self._contents)
+        self._contents_to_list()
+        for idx, _ in enumerate(self._contents):
+            if '♪' in self._contents[idx]:
+                self._contents[idx] = ''
+        self._contents_to_str()
         self._filter_empty()
 
     def remove_sound_effects(self):
@@ -132,10 +133,7 @@ class Subtitle:
         self._remove_dashes()
 
     def _remove_dashes(self):
-        switch = False
-        if isinstance(self._contents, str):
-            switch = True
-            self._contents_to_list()
+        self._contents_to_list()
         for idx, _ in enumerate(self._contents):
             self._contents[idx] = re.sub(r'^[-\s]*$', '', self._contents[idx])
         # Removes empty strings
@@ -143,17 +141,20 @@ class Subtitle:
         # Set index as 0 for later deletion
         if len(self.contents) == 0:
             self.index = 0
-        if switch:
-            self._contents_to_str()
+        self._contents_to_str()
 
 
-class Subtitles(MediaFile):
+class Subtitles:
     '''Content filtering object for subtitles file'''
 
     EXTENSIONS = ['.srt']
 
     def __init__(self, fpath):
-        super().__init__(fpath)
+        if not os.path.exists(fpath):
+            raise IOError('{} does not exist'.format(fpath))
+        if not os.path.isfile(fpath):
+            raise IOError('{} is not a file'.format(fpath))
+        self._fullpath = fpath
         if self.ext not in self.EXTENSIONS:
             raise IOError(
                 '{} is not valid subtitle file: {}'.format(self._fullpath, self.ext)
@@ -168,6 +169,17 @@ class Subtitles(MediaFile):
             if self.subtitles[idx] != other.subtitles[idx]:
                 return False
         return True
+
+    @property
+    def filepath(self):
+        '''Filepath of mediafile'''
+        return self._fullpath
+
+    @property
+    def ext(self):
+        '''Extension of mediafile'''
+        _, ext = os.path.splitext(self._fullpath)
+        return ext
 
     def _get_line_list(self):
         with open(self.filepath, 'r') as fp:

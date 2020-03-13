@@ -13,9 +13,9 @@ pip install subtitle-filter
 
 By default, this module filters the following (in order):
 
-1. Removes font tags e.g. `<font color="#DF01D7">(GUN COCKS)\</font>`.
+1. Removes font tags and text contained within, e.g. `<font color="#DF01D7">Hey\</font>` is removed.
 2. Removes subtitle entries containing asterisks: `*`.
-3. Removes music tags `♪` and text contained within two music tags.
+3. Removes subtitle lines containing `♪`.
 4. Removes sound effects: text contained with and including parenthesis `(BANG)` and brackets `[boom]`.
 5. Replaces capitalized names with dashes, e.g. `GARY: Hey` to `- Hey`.
 6. Removes author tags such as `XoXo Subtitles by PwnedDude967 XoXo`.
@@ -43,10 +43,9 @@ filter-subtitles.py -s /path/to/sub.srt -o /path/to/outsub.srt
 
 Custom filter flags.
 ```
---keep-fonts          Do not remove font tags from subtitles.
+--keep-fonts          Do not remove font tags and text contained within.
 --keep-ast            Do not remove subtitles containing asterisks: (*).
---keep-music          Do not remove "♪" symbols and text contained within
-                        two "♪" symbols.
+--keep-music          Do not lines containing 1 or more "♪" symbols.
 --keep-effects        Do not remove text between and including parenthesis
                         () or brackets []
 --keep-names          Do not replace names in CAPITALS with "-" tags
@@ -54,7 +53,7 @@ Custom filter flags.
 ```
 
 ### Module Usage
-Filter a subtitle in place (overw.rites original subtitle) with default options
+Filter a subtitle in place (overwrites original subtitle) with default options
 ```python
 from subtitle_filter import Subtitles
 
