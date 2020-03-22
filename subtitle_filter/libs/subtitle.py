@@ -1,13 +1,16 @@
 '''Module containing Subtitle and Subtitles classes'''
 import os
 import re
+import codecs
 
 
 class Subtitle:
     '''Subtitle contents object
         (invidual subtitle entry)'''
 
-    AUTHOR_STRINGS = ('synced and corrected by ', 'subtitles by ')
+    AUTHOR_STRINGS = (
+        'synced and corrected by', 'subtitles by', 'encoded and released by'
+    )
 
     def __init__(self):
         self._index = None
@@ -102,7 +105,7 @@ class Subtitle:
             self._contents[idx] = re.sub(
                 r'[\(\[][\S ]*[\)\]][\s]*', '', self._contents[idx]
             )
-        self._remove_dashes()
+        self._remove_lone_symbols()
         self._contents_to_str()
         # Remove multi-line brackets
         self._contents = re.sub(r'[\(\[][\S\s]*[\)\]][\s]*', '', self._contents)
@@ -111,17 +114,17 @@ class Subtitle:
     def replace_names(self):
         '''Replace names in all caps with dashes'''
         names = []
-        names.extend(re.findall(r'[A-Z ]*:', self._contents))
+        names.extend(re.findall(r'([A-Z]+ *: *|[A-Z]{1}[a-z]+: *)', self._contents))
         if len(names) > 1:
             # Replace names with '- '
-            self._contents = re.sub(r'[A-Z ]*: *', '- ', self._contents).lstrip()
+            self._contents = re.sub(r'([A-Z]+ *: *|[A-Z]{1}[a-z]+: *)', '- ', self._contents).lstrip()
         else:
             # Replace name with empty string.
-            self._contents = re.sub(r'[A-Z ]*:', '', self._contents).lstrip()
+            self._contents = re.sub(r'([A-Z]+ *:|[A-Z]{1}[a-z]+: *)', '', self._contents).lstrip()
         self._filter_empty()
 
     def remove_author(self):
-        '''Removes "Subtitles by" subtitle entries'''
+        '''Removes "Subtitles by" subtitle entries etc'''
         for author_str in self.AUTHOR_STRINGS:
             if author_str in self._contents.lower():
                 self.index = 0
@@ -130,12 +133,12 @@ class Subtitle:
     def remove_italics(self):
         '''Removes empty <i> tags, and empty dashes'''
         self._contents = re.sub(r'<i>[\s]*</i>', '', self._contents, flags=re.DOTALL)
-        self._remove_dashes()
+        self._remove_lone_symbols()
 
-    def _remove_dashes(self):
+    def _remove_lone_symbols(self):
         self._contents_to_list()
         for idx, _ in enumerate(self._contents):
-            self._contents[idx] = re.sub(r'^[-\s]*$', '', self._contents[idx])
+            self._contents[idx] = re.sub(r'^[-?\s]*$', '', self._contents[idx])
         # Removes empty strings
         self._contents = list(filter(None, self._contents))
         # Set index as 0 for later deletion
@@ -182,8 +185,8 @@ class Subtitles:
         return ext
 
     def _get_line_list(self):
-        with open(self.filepath, 'r') as fp:
-            line_list = fp.readlines()
+        with codecs.open(self.filepath, 'r', encoding='utf-8', errors='ignore') as fdata:
+            line_list = fdata.readlines()
         line_list_filtered = [x.rstrip() for x in line_list]
         return line_list_filtered
 
