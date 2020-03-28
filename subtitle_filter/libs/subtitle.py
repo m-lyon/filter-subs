@@ -3,19 +3,22 @@ import os
 import re
 import codecs
 
+AUTHOR_STRINGS = (
+    'synced and corrected by',
+    'sync and corrections by',
+    'subtitles by',
+    'encoded and released by',
+    'opensubtitles.org',
+    'please rate this subtitle'
+)
 
 class Subtitle:
     '''Subtitle contents object
         (invidual subtitle entry)'''
 
-    AUTHOR_STRINGS = (
-        'synced and corrected by', 'subtitles by', 'encoded and released by'
-    )
-
     def __init__(self):
         self._index = None
         self._contents = ''
-
         self.start = None
         self.end = None
 
@@ -125,7 +128,7 @@ class Subtitle:
 
     def remove_author(self):
         '''Removes "Subtitles by" subtitle entries etc'''
-        for author_str in self.AUTHOR_STRINGS:
+        for author_str in AUTHOR_STRINGS:
             if author_str in self._contents.lower():
                 self.index = 0
                 break
@@ -138,7 +141,7 @@ class Subtitle:
     def _remove_lone_symbols(self):
         self._contents_to_list()
         for idx, _ in enumerate(self._contents):
-            self._contents[idx] = re.sub(r'^[-?\s]*$', '', self._contents[idx])
+            self._contents[idx] = re.sub(r'^[\_\-\?#\s¶]*$', '', self._contents[idx])
         # Removes empty strings
         self._contents = list(filter(None, self._contents))
         # Set index as 0 for later deletion

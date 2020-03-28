@@ -63,7 +63,7 @@ class SubtitleFilterNamesTestCase(unittest.TestCase):
         self.subs_before = Subtitles(join(DATA_DIR, 'subtitle_names_before.srt'))
         self.subs_after = Subtitles(join(DATA_DIR, 'subtitle_names_after.srt'))
 
-    def test_subtitle_italics(self):
+    def test_subtitle_names(self):
         self.subs_before.filter()
         self.assertEqual(self.subs_before, self.subs_after)
 
@@ -73,7 +73,7 @@ class SubtitleFilterSymbolsTestCase(unittest.TestCase):
         self.subs_before = Subtitles(join(DATA_DIR, 'subtitle_symbols_before.srt'))
         self.subs_after = Subtitles(join(DATA_DIR, 'subtitle_symbols_after.srt'))
 
-    def test_subtitle_italics(self):
+    def test_subtitle_symbols(self):
         self.subs_before.filter()
         self.assertEqual(self.subs_before, self.subs_after)
 
@@ -83,6 +83,6 @@ class SubtitleFilterAuthorTestCase(unittest.TestCase):
         self.subs_before = Subtitles(join(DATA_DIR, 'subtitle_author_before.srt'))
         self.subs_after = Subtitles(join(DATA_DIR, 'subtitle_author_after.srt'))
 
-    def test_subtitle_italics(self):
+    def test_subtitle_author(self):
         self.subs_before.filter()
         self.assertEqual(self.subs_before, self.subs_after)
