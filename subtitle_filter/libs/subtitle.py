@@ -117,13 +117,13 @@ class Subtitle:
     def replace_names(self):
         '''Replace names in all caps with dashes'''
         names = []
-        names.extend(re.findall(r'([A-Z]+ *: *|[A-Z]{1}[a-z]+: *)', self._contents))
+        names.extend(re.findall(r'([A-Z ]+ *: *|[A-Z]{1}[a-z]+: *)', self._contents))
         if len(names) > 1:
             # Replace names with '- '
-            self._contents = re.sub(r'([A-Z]+ *: *|[A-Z]{1}[a-z]+: *)', '- ', self._contents).lstrip()
+            self._contents = re.sub(r'([A-Z ]+ *: *|[A-Z]{1}[a-z]+: *)', '- ', self._contents).lstrip()
         else:
             # Replace name with empty string.
-            self._contents = re.sub(r'([A-Z]+ *:|[A-Z]{1}[a-z]+: *)', '', self._contents).lstrip()
+            self._contents = re.sub(r'([A-Z ]+ *:|[A-Z]{1}[a-z]+: *)', '', self._contents).lstrip()
         self._filter_empty()
 
     def remove_author(self):

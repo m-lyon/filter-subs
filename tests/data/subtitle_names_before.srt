@@ -1,4 +1,4 @@
-2
+1
 00:01:40,723 --> 00:01:42,707
 ELLIOT: It's almost as if...
 JOE: Yes?
@@ -7,12 +7,16 @@ JOE: Yes?
 00:01:40,723 --> 00:01:42,707
 ELLIOT: Gooby pls...
 
-16
+17
 00:03:06,139 --> 00:03:07,639
 Bartender:
 <i> You're gonna need</i>
 <i> most of that</i>
 
-16
+60
 00:03:06,139 --> 00:03:07,639
 Heres what you need: an egg.
+
+5
+00:00:05,377 --> 00:00:06,378
+THE FOOBAR: No.

@@ -82,3 +82,7 @@ subs.filter(
     rm_author=False,
 )
 ```
+
+### Issues
+
+If you spot any issues with the filtered subtitles, or would like to request new features, please create an issue on GitHub.
