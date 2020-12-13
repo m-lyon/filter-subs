@@ -19,3 +19,7 @@ Heres what you need: an egg.
 5
 00:00:05,377 --> 00:00:06,378
 No.
+
+6
+00:03:32,296 --> 00:03:34,840
+Regular text.

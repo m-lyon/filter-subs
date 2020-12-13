@@ -115,15 +115,16 @@ class Subtitle:
         self._filter_empty()
 
     def replace_names(self):
-        '''Replace names in all caps with dashes'''
+        '''Replace names in all caps'''
         names = []
-        names.extend(re.findall(r'([A-Z ]+ *: *|[A-Z]{1}[a-z]+: *)', self._contents))
+        # Care is taken here to preserve genuine sentences with a colon.
+        names.extend(re.findall(r'([A-Z0-9 ]+ *: *|[A-Z]{1}[a-z]+ *: *)', self._contents))
         if len(names) > 1:
             # Replace names with '- '
-            self._contents = re.sub(r'([A-Z ]+ *: *|[A-Z]{1}[a-z]+: *)', '- ', self._contents).lstrip()
+            self._contents = re.sub(r'([A-Z0-9 ]+ *: *|[A-Z]{1}[a-z]+ *: *)', '- ', self._contents).lstrip()
         else:
             # Replace name with empty string.
-            self._contents = re.sub(r'([A-Z ]+ *:|[A-Z]{1}[a-z]+: *)', '', self._contents).lstrip()
+            self._contents = re.sub(r'([A-Z0-9 ]+ *: *|[A-Z]{1}[a-z]+ *: *)', '', self._contents).lstrip()
         self._filter_empty()
 
     def remove_author(self):
