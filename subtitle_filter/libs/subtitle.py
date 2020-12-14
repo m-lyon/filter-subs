@@ -95,7 +95,7 @@ class Subtitle:
         '''Removes music symbols from contents'''
         self._contents_to_list()
         for idx, _ in enumerate(self._contents):
-            if '♪' in self._contents[idx]:
+            if any(symbol in self._contents[idx] for symbol in ['#', '♪']):
                 self._contents[idx] = ''
         self._contents_to_str()
         self._filter_empty()
@@ -134,8 +134,12 @@ class Subtitle:
                 self.index = 0
                 break
 
-    def remove_italics(self):
-        '''Removes empty <i> tags, and empty dashes'''
+    def fix_italics(self):
+        '''Fixes lone <i> or </i> tags, and removes empty <i> tags, and empty dashes'''
+        if '<i>' in self._contents and '</i>' not in self._contents:
+            self._contents += '</i>'
+        if '</i>' in self._contents and '<i>' not in self._contents:
+            self._contents = '<i>' + self._contents
         self._contents = re.sub(r'<i>[\s]*</i>', '', self._contents, flags=re.DOTALL)
         self._remove_lone_symbols()
 
@@ -229,7 +233,7 @@ class Subtitles:
             any(map(lambda sub: sub.replace_names(), self.subtitles))
         if kw.get('rm_author', True):
             any(map(lambda sub: sub.remove_author(), self.subtitles))
-        any(map(lambda sub: sub.remove_italics(), self.subtitles))
+        any(map(lambda sub: sub.fix_italics(), self.subtitles))
         # Remove filtered items from list
         self.subtitles[:] = [sub for sub in self.subtitles if sub.index]
         # Reassign indices

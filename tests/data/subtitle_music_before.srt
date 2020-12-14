@@ -20,3 +20,12 @@ Is real
 00:01:19,519 --> 00:01:26,557
 ♪ This sound
 Is not ♪ 
+
+10
+00:00:57,939 --> 00:01:01,636
+<i>- They want to see the Ram Jam!
+- # Well, I'm frustrated #</i>
+
+11
+00:01:01,709 --> 00:01:04,007
+<i># And outdated #</i>
