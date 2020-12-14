@@ -140,13 +140,15 @@ class Subtitle:
             self._contents += '</i>'
         if '</i>' in self._contents and '<i>' not in self._contents:
             self._contents = '<i>' + self._contents
-        self._contents = re.sub(r'<i>[\s]*</i>', '', self._contents, flags=re.DOTALL)
+        self._contents = re.sub(r'<i>[\_\-\?#\s¶]*</i>', '', self._contents, flags=re.DOTALL)
         self._remove_lone_symbols()
 
     def _remove_lone_symbols(self):
         self._contents_to_list()
         for idx, _ in enumerate(self._contents):
             self._contents[idx] = re.sub(r'^[\_\-\?#\s¶]*$', '', self._contents[idx])
+            self._contents[idx] = re.sub(r'^[\_\-\?#\s¶]*<i>[\_\-\?#\s¶]*$', '<i>', self._contents[idx])
+            self._contents[idx] = re.sub(r'^[\_\-\?#\s¶]*</i>[\_\-\?#\s¶]*$', '</i>', self._contents[idx])
         # Removes empty strings
         self._contents = list(filter(None, self._contents))
         # Set index as 0 for later deletion
