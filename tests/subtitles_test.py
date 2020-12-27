@@ -86,3 +86,13 @@ class SubtitleFilterAuthorTestCase(unittest.TestCase):
     def test_subtitle_author(self):
         self.subs_before.filter()
         self.assertEqual(self.subs_before, self.subs_after)
+
+
+class SubtitleFilterCommaTestCase(unittest.TestCase):
+    def setUp(self):
+        self.subs_before = Subtitles(join(DATA_DIR, 'subtitle_commas_before.srt'))
+        self.subs_after = Subtitles(join(DATA_DIR, 'subtitle_commas_after.srt'))
+
+    def test_subtitle_commas(self):
+        self.subs_before.filter()
+        self.assertEqual(self.subs_before, self.subs_after)

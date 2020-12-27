@@ -9,12 +9,14 @@ AUTHOR_STRINGS = (
     'subtitles by',
     'encoded and released by',
     'opensubtitles.org',
-    'please rate this subtitle'
+    'please rate this subtitle',
 )
+
 
 class Subtitle:
     '''Subtitle contents object
-        (invidual subtitle entry)'''
+        (invidual subtitle entry)
+    '''
 
     def __init__(self):
         self._index = None
@@ -65,7 +67,8 @@ class Subtitle:
 
     def _filter_empty(self):
         '''Removes empty quotes from contents list,
-            Converts self.index to 0'''
+            Converts self.index to 0
+        '''
         # Set index as 0 for later deletion
         if not self.contents:
             self.index = 0
@@ -78,6 +81,25 @@ class Subtitle:
             '{} --> {}'.format(self.start, self.end),
             *self._contents.split('\n'),
         ]
+
+    @staticmethod
+    def _remove_comma_space(matchobj):
+        return matchobj.group(0).replace(' ,', ',')
+
+    @staticmethod
+    def _add_comma_space(matchobj):
+        return matchobj.group(0).replace(',', ', ')
+
+    def fix_comma_spaces(self):
+        '''Fixes comma space seperation'''
+        for _ in re.findall(r'[A-Za-z]+\s+,', self._contents):
+            self._contents = re.sub(
+                r'[A-Za-z]+\s+,', self._remove_comma_space, self._contents
+            )
+        for _ in re.findall(r'[A-Za-z]+,[A-Za-z]+', self._contents):
+            self._contents = re.sub(
+                r'[A-Za-z]+,[A-Za-z]+', self._add_comma_space, self._contents
+            )
 
     def remove_font_colours(self):
         '''Removes <font> tags from contents'''
@@ -116,15 +138,18 @@ class Subtitle:
 
     def replace_names(self):
         '''Replace names in all caps'''
-        names = []
         # Care is taken here to preserve genuine sentences with a colon.
-        names.extend(re.findall(r'([A-Z0-9 ]+ *: *|[A-Z]{1}[a-z]+ *: *)', self._contents))
+        names = re.findall(r'([A-Z0-9 ]+ *: *|[A-Z]{1}[a-z]+ *: *)', self._contents)
         if len(names) > 1:
             # Replace names with '- '
-            self._contents = re.sub(r'([A-Z0-9 ]+ *: *|[A-Z]{1}[a-z]+ *: *)', '- ', self._contents).lstrip()
+            self._contents = re.sub(
+                r'([A-Z0-9 ]+ *: *|[A-Z]{1}[a-z]+ *: *)', '- ', self._contents
+            ).lstrip()
         else:
             # Replace name with empty string.
-            self._contents = re.sub(r'([A-Z0-9 ]+ *: *|[A-Z]{1}[a-z]+ *: *)', '', self._contents).lstrip()
+            self._contents = re.sub(
+                r'([A-Z0-9 ]+ *: *|[A-Z]{1}[a-z]+ *: *)', '', self._contents
+            ).lstrip()
         self._filter_empty()
 
     def remove_author(self):
@@ -140,15 +165,21 @@ class Subtitle:
             self._contents += '</i>'
         if '</i>' in self._contents and '<i>' not in self._contents:
             self._contents = '<i>' + self._contents
-        self._contents = re.sub(r'<i>[\_\-\?#\s¶]*</i>', '', self._contents, flags=re.DOTALL)
+        self._contents = re.sub(
+            r'<i>[\_\-\?#\s¶]*</i>', '', self._contents, flags=re.DOTALL
+        )
         self._remove_lone_symbols()
 
     def _remove_lone_symbols(self):
         self._contents_to_list()
         for idx, _ in enumerate(self._contents):
             self._contents[idx] = re.sub(r'^[\_\-\?#\s¶]*$', '', self._contents[idx])
-            self._contents[idx] = re.sub(r'^[\_\-\?#\s¶]*<i>[\_\-\?#\s¶]*$', '<i>', self._contents[idx])
-            self._contents[idx] = re.sub(r'^[\_\-\?#\s¶]*</i>[\_\-\?#\s¶]*$', '</i>', self._contents[idx])
+            self._contents[idx] = re.sub(
+                r'^[\_\-\?#\s¶]*<i>[\_\-\?#\s¶]*$', '<i>', self._contents[idx]
+            )
+            self._contents[idx] = re.sub(
+                r'^[\_\-\?#\s¶]*</i>[\_\-\?#\s¶]*$', '</i>', self._contents[idx]
+            )
         # Removes empty strings
         self._contents = list(filter(None, self._contents))
         # Set index as 0 for later deletion
@@ -195,7 +226,9 @@ class Subtitles:
         return ext
 
     def _get_line_list(self):
-        with codecs.open(self.filepath, 'r', encoding='utf-8', errors='ignore') as fdata:
+        with codecs.open(
+            self.filepath, 'r', encoding='utf-8', errors='ignore'
+        ) as fdata:
             line_list = fdata.readlines()
         line_list_filtered = [x.rstrip() for x in line_list]
         return line_list_filtered
@@ -235,6 +268,8 @@ class Subtitles:
             any(map(lambda sub: sub.replace_names(), self.subtitles))
         if kw.get('rm_author', True):
             any(map(lambda sub: sub.remove_author(), self.subtitles))
+        if kw.get('fix_commas', True):
+            any(map(lambda sub: sub.fix_comma_spaces(), self.subtitles))
         any(map(lambda sub: sub.fix_italics(), self.subtitles))
         # Remove filtered items from list
         self.subtitles[:] = [sub for sub in self.subtitles if sub.index]
@@ -249,7 +284,7 @@ class Subtitles:
 
     def save(self, new_filepath=None):
         '''Saves subtitle object to disk,
-            omit new_filepath to save inplace
+        omit new_filepath to save inplace
         '''
         if new_filepath is not None:
             self._fullpath = new_filepath

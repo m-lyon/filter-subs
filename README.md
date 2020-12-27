@@ -19,7 +19,8 @@ By default, this module filters the following (in order):
 4. Removes sound effects: text contained with and including parenthesis `(BANG)` and brackets `[boom]`.
 5. Replaces names with dashes, e.g. `GARY: Hey` or `Gary: Hey` to `- Hey`.
 6. Removes author tags e.g. `XoXo Subtitles by PwnedDude967 XoXo`.
-7. Removes lone symbols such as `?`, `-`, `#`, `_`.
+7. Fixes erroneous comma spacing, e.g. `Hey , what's up? Nothing,my man` to `Hey, what's up? Nothing, my man`.
+8. Removes lone symbols such as `?`, `-`, `#`, `_`.
 
 ### Script Usage
 Bring up the help display:

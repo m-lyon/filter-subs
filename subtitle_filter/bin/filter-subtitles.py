@@ -16,6 +16,7 @@ def run(args):
         rm_effects=args.rm_effects,
         rm_names=args.rm_names,
         rm_author=args.rm_author,
+        fix_commas=args.fix_commas,
     )
 
     if args.print:
@@ -95,6 +96,13 @@ if __name__ == '__main__':
         default=True,
         action='store_false',
         help='Do not remove author tags, eg. Subtitles by some guy.',
+    )
+    ap.add_argument(
+        '--keep-commas',
+        dest='fix_commas',
+        default=True,
+        action='store_false',
+        help='Do not fix comma spacings.',
     )
 
     arguments = ap.parse_args()
