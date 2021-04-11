@@ -10,6 +10,8 @@ AUTHOR_STRINGS = (
     'encoded and released by',
     'opensubtitles.org',
     'please rate this subtitle',
+    'captioning sponsored by',
+    'captioned by',
 )
 
 
@@ -128,12 +130,12 @@ class Subtitle:
         self._contents_to_list()
         for idx, _ in enumerate(self._contents):
             self._contents[idx] = re.sub(
-                r'[\(\[][\S ]*[\)\]][\s]*', '', self._contents[idx]
+                r'[\(\[][\S ]*[\)\]][\s:]*', '', self._contents[idx]
             )
         self._remove_lone_symbols()
         self._contents_to_str()
         # Remove multi-line brackets
-        self._contents = re.sub(r'[\(\[][\S\s]*[\)\]][\s]*', '', self._contents)
+        self._contents = re.sub(r'[\(\[][\S\s]*[\)\]][\s:]*', '', self._contents)
         self._filter_empty()
 
     def replace_names(self):
