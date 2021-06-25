@@ -2,16 +2,16 @@
 00:01:19,519 --> 00:01:26,557
 <i>♪ ♪</i>
 
-1
+2
 00:01:19,519 --> 00:01:26,557
-<i>♪ 
+<i>♪
 ♪</i>
 
-2
+3
 00:01:40,723 --> 00:01:42,707
 What's up dawg.
 
-5
+4
 00:01:19,519 --> 00:01:26,557
 ♪ This sound
 Is real
@@ -19,13 +19,20 @@ Is real
 5
 00:01:19,519 --> 00:01:26,557
 ♪ This sound
-Is not ♪ 
+Is not ♪
 
-10
+6
 00:00:57,939 --> 00:01:01,636
 <i>- They want to see the Ram Jam!
 - # Well, I'm frustrated #</i>
 
-11
+7
 00:01:01,709 --> 00:01:04,007
 <i># And outdated #</i>
+
+8
+00:01:33,125 --> 00:01:36,291
+♪<i> 'Cause it sure looks to me</i>
+<i>Like them people</i>
+<i>Ain't playin'♪</i>
+

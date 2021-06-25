@@ -117,6 +117,9 @@ class Subtitle:
 
     def remove_music(self):
         '''Removes music symbols from contents'''
+        # Remove music symbol behaving as parenthesis
+        self._contents = re.sub(r'♪(.*)♪', '', self._contents, flags=re.DOTALL)
+        # Remove behaving as inline
         self._contents_to_list()
         for idx, _ in enumerate(self._contents):
             if any(symbol in self._contents[idx] for symbol in ['#', '♪']):
@@ -168,19 +171,19 @@ class Subtitle:
         if '</i>' in self._contents and '<i>' not in self._contents:
             self._contents = '<i>' + self._contents
         self._contents = re.sub(
-            r'<i>[\_\-\?#\s¶]*</i>', '', self._contents, flags=re.DOTALL
+            r'<i>[\_\-\‐\?#\s¶]*</i>', '', self._contents, flags=re.DOTALL
         )
         self._remove_lone_symbols()
 
     def _remove_lone_symbols(self):
         self._contents_to_list()
         for idx, _ in enumerate(self._contents):
-            self._contents[idx] = re.sub(r'^[\_\-\?#\s¶]*$', '', self._contents[idx])
+            self._contents[idx] = re.sub(r'^[\_\-\‐\?#\s¶]*$', '', self._contents[idx])
             self._contents[idx] = re.sub(
-                r'^[\_\-\?#\s¶]*<i>[\_\-\?#\s¶]*$', '<i>', self._contents[idx]
+                r'^[\_\-\‐\?#\s¶]*<i>[\_\-\‐\?#\s¶]*$', '<i>', self._contents[idx]
             )
             self._contents[idx] = re.sub(
-                r'^[\_\-\?#\s¶]*</i>[\_\-\?#\s¶]*$', '</i>', self._contents[idx]
+                r'^[\_\-\‐\?#\s¶]*</i>[\_\-\‐\?#\s¶]*$', '</i>', self._contents[idx]
             )
         # Removes empty strings
         self._contents = list(filter(None, self._contents))
@@ -290,6 +293,6 @@ class Subtitles:
         '''
         if new_filepath is not None:
             self._fullpath = new_filepath
-        with open(self._fullpath, 'w') as fp:
+        with open(self._fullpath, 'w', encoding='utf-8') as fp:
             for sub in self.subtitles:
                 fp.write(str(sub) + '\n')
