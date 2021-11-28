@@ -240,13 +240,11 @@ class Subtitles:
 
     def _parse_subs(self):
         sub_list = [Subtitle()]
-        for line in self._line_list:
+        # make index of first line is 1 not 0 to be not skipped
+        for index, line in enumerate(self._line_list, start=1):
             # If the index has not yet been created in latest sublist item
             if not sub_list[-1].index:
-                try:
-                    sub_list[-1].index = int(line)
-                except ValueError:
-                    continue
+                sub_list[-1].index = index
             # Time line
             elif ' --> ' in line:
                 sub_list[-1].start, sub_list[-1].end = line.split(' --> ')
@@ -277,6 +275,7 @@ class Subtitles:
             any(map(lambda sub: sub.fix_comma_spaces(), self.subtitles))
         any(map(lambda sub: sub.fix_italics(), self.subtitles))
         # Remove filtered items from list
+        # this remove first line because it's index number is 0 which give false
         self.subtitles[:] = [sub for sub in self.subtitles if sub.index]
         # Reassign indices
         for idx, sub in enumerate(self.subtitles):
