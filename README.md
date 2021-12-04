@@ -1,5 +1,5 @@
 # subtitle-filter
-[![Build Status](https://travis-ci.com/mattlyon93/filter-subs.svg?branch=master)](https://travis-ci.com/mattlyon93/filter-subs) [![Coverage Status](https://coveralls.io/repos/github/mattlyon93/filter-subs/badge.svg?branch=master)](https://coveralls.io/github/mattlyon93/filter-subs?branch=master) [![PyPI version](https://badge.fury.io/py/subtitle-filter.svg)](https://badge.fury.io/py/subtitle-filter)
+[![PyPI version](https://badge.fury.io/py/subtitle-filter.svg)](https://badge.fury.io/py/subtitle-filter)
 
 Filter `.srt` subtitle files to remove SDH (Deaf or Hard-of-Hearing) entries and other tags.
 
