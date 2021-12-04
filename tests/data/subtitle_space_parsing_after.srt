@@ -1,0 +1,9 @@
+1
+00:00:06,507 --> 00:00:08,467
+The world
+is broken.
+
+2
+00:00:10,386 --> 00:00:12,555
+men who were born
+with great power believed

@@ -46,7 +46,7 @@ class Subtitle:
 
     @property
     def index(self):
-        '''Returns the index number for subtitle, or False is index is not assigned'''
+        '''Returns the index number for subtitle, or False if index is not assigned'''
         if self._index is None:
             return False
         return self._index
@@ -248,8 +248,11 @@ class Subtitles:
                 except ValueError:
                     continue
             # Time line
-            elif ' --> ' in line:
-                sub_list[-1].start, sub_list[-1].end = line.split(' --> ')
+            elif sub_list[-1].start is None:
+                if ' --> ' in line:
+                    sub_list[-1].start, sub_list[-1].end = line.split(' --> ')
+                else:
+                    continue
             # New subtitle entry
             elif not line:
                 sub_list.append(Subtitle())

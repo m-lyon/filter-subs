@@ -7,6 +7,7 @@ from subtitle_filter import Subtitles
 
 DATA_DIR = join(dirname(__file__), 'data')
 
+
 class SubtitleFilterFontTestCase(unittest.TestCase):
 
     def setUp(self):
@@ -16,6 +17,7 @@ class SubtitleFilterFontTestCase(unittest.TestCase):
     def test_subtitle_font(self):
         self.subs_before.filter()
         self.assertEqual(self.subs_before, self.subs_after)
+
 
 class SubtitleFilterMusicTestCase(unittest.TestCase):
 
@@ -27,6 +29,7 @@ class SubtitleFilterMusicTestCase(unittest.TestCase):
         self.subs_before.filter()
         self.assertEqual(self.subs_before, self.subs_after)
 
+
 class SubtitleFilterBracketsTestCase(unittest.TestCase):
 
     def setUp(self):
@@ -36,6 +39,7 @@ class SubtitleFilterBracketsTestCase(unittest.TestCase):
     def test_subtitle_brackets(self):
         self.subs_before.filter()
         self.assertEqual(self.subs_before, self.subs_after)
+
 
 class SubtitleFilterItalicsTestCase(unittest.TestCase):
 
@@ -47,6 +51,7 @@ class SubtitleFilterItalicsTestCase(unittest.TestCase):
         self.subs_before.filter()
         self.assertEqual(self.subs_before, self.subs_after)
 
+
 class SubtitleAllTestCase(unittest.TestCase):
 
     def setUp(self):
@@ -56,6 +61,7 @@ class SubtitleAllTestCase(unittest.TestCase):
     def test_subtitle_all(self):
         self.subs_before.filter()
         self.assertEqual(self.subs_before, self.subs_after)
+
 
 class SubtitleFilterNamesTestCase(unittest.TestCase):
 
@@ -67,6 +73,7 @@ class SubtitleFilterNamesTestCase(unittest.TestCase):
         self.subs_before.filter()
         self.assertEqual(self.subs_before, self.subs_after)
 
+
 class SubtitleFilterSymbolsTestCase(unittest.TestCase):
 
     def setUp(self):
@@ -76,6 +83,7 @@ class SubtitleFilterSymbolsTestCase(unittest.TestCase):
     def test_subtitle_symbols(self):
         self.subs_before.filter()
         self.assertEqual(self.subs_before, self.subs_after)
+
 
 class SubtitleFilterAuthorTestCase(unittest.TestCase):
 
@@ -96,3 +104,14 @@ class SubtitleFilterCommaTestCase(unittest.TestCase):
     def test_subtitle_commas(self):
         self.subs_before.filter()
         self.assertEqual(self.subs_before, self.subs_after)
+
+
+class SubtitleParseSpacingTestCase(unittest.TestCase):
+    def setUp(self):
+        self.subs_before = Subtitles(join(DATA_DIR, 'subtitle_space_parsing_before.srt'))
+        self.subs_after = Subtitles(join(DATA_DIR, 'subtitle_space_parsing_after.srt'))
+
+    def test_space_parsing_commas(self):
+        self.subs_before.filter()
+        self.assertEqual(self.subs_before, self.subs_after)
+    
