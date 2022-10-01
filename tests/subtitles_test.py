@@ -114,4 +114,13 @@ class SubtitleParseSpacingTestCase(unittest.TestCase):
     def test_space_parsing_commas(self):
         self.subs_before.filter()
         self.assertEqual(self.subs_before, self.subs_after)
-    
+
+
+class SubtitleBOMTestCase(unittest.TestCase):
+    def setUp(self):
+        self.subs_before = Subtitles(join(DATA_DIR, 'subtitle_bom_before.srt'))
+        self.subs_after = Subtitles(join(DATA_DIR, 'subtitle_bom_after.srt'))
+
+    def test_space_parsing_commas(self):
+        self.subs_before.filter()
+        self.assertEqual(self.subs_before, self.subs_after)

@@ -232,7 +232,7 @@ class Subtitles:
 
     def _get_line_list(self):
         with codecs.open(
-            self.filepath, 'r', encoding='utf-8', errors='ignore'
+            self.filepath, 'r', encoding='utf-8-sig', errors='ignore'
         ) as fdata:
             line_list = fdata.readlines()
         line_list_filtered = [x.rstrip() for x in line_list]
