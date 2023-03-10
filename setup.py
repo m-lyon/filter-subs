@@ -3,7 +3,7 @@
 from os import path
 from setuptools import setup
 
-version = '1.4.4'
+version = '1.4.5'
 this_dir = path.abspath(path.dirname(__file__))
 with open(path.join(this_dir, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
@@ -26,8 +26,8 @@ setup(
         'Operating System :: Unix',
         'Operating System :: MacOS',
         'Topic :: Text Processing :: Filters',
-        'Topic :: Multimedia :: Sound/Audio :: Speech'
+        'Topic :: Multimedia :: Sound/Audio :: Speech',
     ],
     keywords=['subtitle', 'SDH', 'hard-of-hearing', 'filter', 'movie', 'tv'],
-    scripts=['subtitle_filter/bin/filter-subtitles.py']
+    scripts=['subtitle_filter/bin/filter-subtitles.py'],
 )

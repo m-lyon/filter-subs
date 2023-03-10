@@ -9,3 +9,11 @@ Examples are tough.
 3
 00:11:31,995 --> 00:11:35,346
 I'm raising a teenage boy.
+
+4
+00:12:31,995 --> 00:12:35,346
+twice now.
+
+5
+00:15:31,995 --> 00:51:35,346
+Third time.

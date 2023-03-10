@@ -17,7 +17,7 @@ AUTHOR_STRINGS = (
 
 class Subtitle:
     '''Subtitle contents object
-        (invidual subtitle entry)
+    (invidual subtitle entry)
     '''
 
     def __init__(self):
@@ -27,9 +27,7 @@ class Subtitle:
         self.end = None
 
     def __str__(self):
-        return '{}\n{} --> {}\n{}\n'.format(
-            self._index, self.start, self.end, self._contents
-        )
+        return '{}\n{} --> {}\n{}\n'.format(self._index, self.start, self.end, self._contents)
 
     def __eq__(self, other):
         if self.__str__() == other.__str__():
@@ -69,7 +67,7 @@ class Subtitle:
 
     def _filter_empty(self):
         '''Removes empty quotes from contents list,
-            Converts self.index to 0
+        Converts self.index to 0
         '''
         # Set index as 0 for later deletion
         if not self.contents:
@@ -95,19 +93,13 @@ class Subtitle:
     def fix_comma_spaces(self):
         '''Fixes comma space seperation'''
         for _ in re.findall(r'[A-Za-z]+\s+,', self._contents):
-            self._contents = re.sub(
-                r'[A-Za-z]+\s+,', self._remove_comma_space, self._contents
-            )
+            self._contents = re.sub(r'[A-Za-z]+\s+,', self._remove_comma_space, self._contents)
         for _ in re.findall(r'[A-Za-z]+,[A-Za-z]+', self._contents):
-            self._contents = re.sub(
-                r'[A-Za-z]+,[A-Za-z]+', self._add_comma_space, self._contents
-            )
+            self._contents = re.sub(r'[A-Za-z]+,[A-Za-z]+', self._add_comma_space, self._contents)
 
     def remove_font_colours(self):
         '''Removes <font> tags from contents'''
-        self._contents = re.sub(
-            r'\<font(.*)\>(.*)\</font\>', '', self._contents, flags=re.DOTALL
-        )
+        self._contents = re.sub(r'\<font(.*)\>(.*)\</font\>', '', self._contents, flags=re.DOTALL)
         self._filter_empty()
 
     def remove_asterisks(self):
@@ -128,13 +120,18 @@ class Subtitle:
         self._filter_empty()
 
     def remove_sound_effects(self):
-        '''Removes text in between parenthesis and square brackets'''
+        '''Removes text in between parenthesis, brackets, and forward slashes'''
         # Remove single line brackets
         self._contents_to_list()
         for idx, _ in enumerate(self._contents):
-            self._contents[idx] = re.sub(
-                r'[\(\[][\S ]*[\)\]][\s:]*', '', self._contents[idx]
-            )
+            # Have split this check into a for loop across the delimiters as providing
+            # them in one regex expression will yield errors for forward slash within italics
+            # tag when used with square brackets/parenthesis. e.g line 8 of
+            # subtitle_sound_effects_before.srt
+            for prefix, suffix in (('(', ')'), ('[', ']'), ('/', '/')):
+                self._contents[idx] = re.sub(
+                    rf'[\{prefix}][\S ]*[\{suffix}][\s:]*', '', self._contents[idx]
+                )
         self._remove_lone_symbols()
         self._contents_to_str()
         # Remove multi-line brackets
@@ -170,9 +167,7 @@ class Subtitle:
             self._contents += '</i>'
         if '</i>' in self._contents and '<i>' not in self._contents:
             self._contents = '<i>' + self._contents
-        self._contents = re.sub(
-            r'<i>[\_\-\‐\?#\s¶]*</i>', '', self._contents, flags=re.DOTALL
-        )
+        self._contents = re.sub(r'<i>[\_\-\‐\?#\s¶]*</i>', '', self._contents, flags=re.DOTALL)
         self._remove_lone_symbols()
 
     def _remove_lone_symbols(self):
@@ -205,9 +200,7 @@ class Subtitles:
             raise IOError('{} is not a file'.format(fpath))
         self._fullpath = fpath
         if self.ext not in self.EXTENSIONS:
-            raise IOError(
-                '{} is not valid subtitle file: {}'.format(self._fullpath, self.ext)
-            )
+            raise IOError('{} is not valid subtitle file: {}'.format(self._fullpath, self.ext))
         self._line_list = self._get_line_list()
         self.subtitles = self._parse_subs()
 
@@ -231,9 +224,7 @@ class Subtitles:
         return ext
 
     def _get_line_list(self):
-        with codecs.open(
-            self.filepath, 'r', encoding='utf-8-sig', errors='ignore'
-        ) as fdata:
+        with codecs.open(self.filepath, 'r', encoding='utf-8-sig', errors='ignore') as fdata:
             line_list = fdata.readlines()
         line_list_filtered = [x.rstrip() for x in line_list]
         return line_list_filtered

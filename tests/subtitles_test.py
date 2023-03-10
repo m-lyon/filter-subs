@@ -9,7 +9,6 @@ DATA_DIR = join(dirname(__file__), 'data')
 
 
 class SubtitleFilterFontTestCase(unittest.TestCase):
-
     def setUp(self):
         self.subs_before = Subtitles(join(DATA_DIR, 'subtitle_font_before.srt'))
         self.subs_after = Subtitles(join(DATA_DIR, 'subtitle_font_after.srt'))
@@ -20,7 +19,6 @@ class SubtitleFilterFontTestCase(unittest.TestCase):
 
 
 class SubtitleFilterMusicTestCase(unittest.TestCase):
-
     def setUp(self):
         self.subs_before = Subtitles(join(DATA_DIR, 'subtitle_music_before.srt'))
         self.subs_after = Subtitles(join(DATA_DIR, 'subtitle_music_after.srt'))
@@ -30,11 +28,10 @@ class SubtitleFilterMusicTestCase(unittest.TestCase):
         self.assertEqual(self.subs_before, self.subs_after)
 
 
-class SubtitleFilterBracketsTestCase(unittest.TestCase):
-
+class SubtitleFilterSoundEffectsTestCase(unittest.TestCase):
     def setUp(self):
-        self.subs_before = Subtitles(join(DATA_DIR, 'subtitle_parenthesis_before.srt'))
-        self.subs_after = Subtitles(join(DATA_DIR, 'subtitle_parenthesis_after.srt'))
+        self.subs_before = Subtitles(join(DATA_DIR, 'subtitle_sound_effects_before.srt'))
+        self.subs_after = Subtitles(join(DATA_DIR, 'subtitle_sound_effects_after.srt'))
 
     def test_subtitle_brackets(self):
         self.subs_before.filter()
@@ -42,7 +39,6 @@ class SubtitleFilterBracketsTestCase(unittest.TestCase):
 
 
 class SubtitleFilterItalicsTestCase(unittest.TestCase):
-
     def setUp(self):
         self.subs_before = Subtitles(join(DATA_DIR, 'subtitle_italics_before.srt'))
         self.subs_after = Subtitles(join(DATA_DIR, 'subtitle_italics_after.srt'))
@@ -53,7 +49,6 @@ class SubtitleFilterItalicsTestCase(unittest.TestCase):
 
 
 class SubtitleAllTestCase(unittest.TestCase):
-
     def setUp(self):
         self.subs_before = Subtitles(join(DATA_DIR, 'subtitle_example_before.srt'))
         self.subs_after = Subtitles(join(DATA_DIR, 'subtitle_example_after.srt'))
@@ -64,7 +59,6 @@ class SubtitleAllTestCase(unittest.TestCase):
 
 
 class SubtitleFilterNamesTestCase(unittest.TestCase):
-
     def setUp(self):
         self.subs_before = Subtitles(join(DATA_DIR, 'subtitle_names_before.srt'))
         self.subs_after = Subtitles(join(DATA_DIR, 'subtitle_names_after.srt'))
@@ -75,7 +69,6 @@ class SubtitleFilterNamesTestCase(unittest.TestCase):
 
 
 class SubtitleFilterSymbolsTestCase(unittest.TestCase):
-
     def setUp(self):
         self.subs_before = Subtitles(join(DATA_DIR, 'subtitle_symbols_before.srt'))
         self.subs_after = Subtitles(join(DATA_DIR, 'subtitle_symbols_after.srt'))
@@ -86,7 +79,6 @@ class SubtitleFilterSymbolsTestCase(unittest.TestCase):
 
 
 class SubtitleFilterAuthorTestCase(unittest.TestCase):
-
     def setUp(self):
         self.subs_before = Subtitles(join(DATA_DIR, 'subtitle_author_before.srt'))
         self.subs_after = Subtitles(join(DATA_DIR, 'subtitle_author_after.srt'))
