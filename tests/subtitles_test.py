@@ -113,6 +113,6 @@ class SubtitleBOMTestCase(unittest.TestCase):
         self.subs_before = Subtitles(join(DATA_DIR, 'subtitle_bom_before.srt'))
         self.subs_after = Subtitles(join(DATA_DIR, 'subtitle_bom_after.srt'))
 
-    def test_space_parsing_commas(self):
+    def test_bom(self):
         self.subs_before.filter()
         self.assertEqual(self.subs_before, self.subs_after)

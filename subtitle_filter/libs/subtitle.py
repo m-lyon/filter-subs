@@ -1,7 +1,6 @@
 '''Module containing Subtitle and Subtitles classes'''
 import os
 import re
-import codecs
 
 AUTHOR_STRINGS = (
     'synced and corrected by',
@@ -13,6 +12,15 @@ AUTHOR_STRINGS = (
     'captioning sponsored by',
     'captioned by',
 )
+
+
+def has_bom(filename):
+    '''Tests whether file byte order marking'''
+    with open(filename, 'rb') as file:
+        bom_bytes = file.read(4)
+        return bom_bytes.startswith(
+            (b'\xef\xbb\xbf', b'\xff\xfe', b'\xfe\xff', b'\xff\xfe\x00\x00', b'\x00\x00\xfe\xff')
+        )
 
 
 class Subtitle:
@@ -224,8 +232,12 @@ class Subtitles:
         return ext
 
     def _get_line_list(self):
-        with codecs.open(self.filepath, 'r', encoding='utf-8-sig', errors='ignore') as fdata:
-            line_list = fdata.readlines()
+        if has_bom(self.filepath):
+            with open(self.filepath, 'r', encoding='utf-8-sig') as fdata:
+                line_list = fdata.readlines()
+        else:
+            with open(self.filepath, 'r', encoding='utf-8') as fdata:
+                line_list = fdata.readlines()
         line_list_filtered = [x.rstrip() for x in line_list]
         return line_list_filtered
 
