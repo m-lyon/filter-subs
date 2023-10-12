@@ -149,8 +149,9 @@ class Subtitle:
     def replace_names(self):
         '''Replace names in all caps'''
         # Care is taken here to preserve genuine sentences with a colon.
+        NAME_REGEXP = r"([A-Z0-9 ][A-Z0-9' ]*: *|[A-Z]{1}[a-z]+ *: *)"
 
-        names = re.findall(r'([A-Z0-9 ]+ *: *|[A-Z]{1}[a-z]+ *: *)', self._contents)
+        names = re.findall(NAME_REGEXP, self._contents)
         # dialogues from different people preceeded with -
         # TODO: does this cover the case where the names are the same?
         replacement = '- ' if len(names) > 1 else ''
@@ -168,9 +169,9 @@ class Subtitle:
 
             return original_match if is_hour() else replacement
 
-        self._contents = re.sub(
-            r'([A-Z0-9 ]+ *: *|[A-Z]{1}[a-z]+ *: *)', replace_if_not_hour, self._contents
-        ).lstrip()
+        self._contents = re.sub( NAME_REGEXP, replace_if_not_hour, self._contents).lstrip()
+        # TODO: would it make sense to make a context manager and do this on exit and expose all the high level methods
+        # in said context manager?
         self._filter_empty()
 
     def remove_author(self):
