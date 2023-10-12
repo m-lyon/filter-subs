@@ -116,3 +116,13 @@ class SubtitleBOMTestCase(unittest.TestCase):
     def test_bom(self):
         self.subs_before.filter()
         self.assertEqual(self.subs_before, self.subs_after)
+
+
+class SubtitleHoursTestCase(unittest.TestCase):
+    def setUp(self):
+        self.subs_before = Subtitles(join(DATA_DIR, 'hour_in_dialogue_before.srt'))
+        self.subs_after = Subtitles(join(DATA_DIR, 'hour_in_dialogue_after.srt'))
+
+    def test_hours(self):
+        self.subs_before.filter()
+        self.assertEqual(self.subs_before, self.subs_after)

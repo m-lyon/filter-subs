@@ -149,17 +149,28 @@ class Subtitle:
     def replace_names(self):
         '''Replace names in all caps'''
         # Care is taken here to preserve genuine sentences with a colon.
+
         names = re.findall(r'([A-Z0-9 ]+ *: *|[A-Z]{1}[a-z]+ *: *)', self._contents)
-        if len(names) > 1:
-            # Replace names with '- '
-            self._contents = re.sub(
-                r'([A-Z0-9 ]+ *: *|[A-Z]{1}[a-z]+ *: *)', '- ', self._contents
-            ).lstrip()
-        else:
-            # Replace name with empty string.
-            self._contents = re.sub(
-                r'([A-Z0-9 ]+ *: *|[A-Z]{1}[a-z]+ *: *)', '', self._contents
-            ).lstrip()
+        # dialogues from different people preceeded with -
+        # TODO: does this cover the case where the names are the same?
+        replacement = '- ' if len(names) > 1 else ''
+
+        def replace_if_not_hour(match):
+            # group0 = entire match
+            start, end = match.span(0)
+            original_match = match.string[start:end]
+
+            def is_hour():
+                hour_candidate = match.string[start:end+2].strip()
+                assert ":" in hour_candidate, "it has to have a ':' character because it was matched by a regexp"
+                lhs, rhs = hour_candidate.split(":")
+                return rhs and lhs and len(lhs) <= 2 and "".join([lhs,rhs]).isnumeric()
+
+            return original_match if is_hour() else replacement
+
+        self._contents = re.sub(
+            r'([A-Z0-9 ]+ *: *|[A-Z]{1}[a-z]+ *: *)', replace_if_not_hour, self._contents
+        ).lstrip()
         self._filter_empty()
 
     def remove_author(self):
@@ -211,6 +222,9 @@ class Subtitles:
             raise IOError('{} is not valid subtitle file: {}'.format(self._fullpath, self.ext))
         self._line_list = self._get_line_list()
         self.subtitles = self._parse_subs()
+
+    def __repr__(self):
+        return "".join(map(str, self.subtitles))
 
     def __eq__(self, other):
         if len(self.subtitles) != len(other.subtitles):
