@@ -25,3 +25,13 @@ THE FOOBAR: No.
 00:03:32,296 --> 00:03:34,840
 FOO BAR 4: (IN ENGLISH)
 Regular text.
+
+20
+00:00:55,296 --> 00:00:58,931
+all: ♪ Cop cuties,
+cute and on duty ♪
+
+20
+00:00:55,296 --> 00:00:58,931
+all: Cop cuties,
+cute and on duty

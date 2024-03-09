@@ -149,7 +149,7 @@ class Subtitle:
     def replace_names(self):
         '''Replace names in all caps'''
         # Care is taken here to preserve genuine sentences with a colon.
-        NAME_REGEXP = r"([A-Z0-9 ][A-Z0-9' ]*: *|[A-Z]{1}[a-z]+ *: *)"
+        NAME_REGEXP = r"([A-Z0-9 ][A-Z0-9' ]*: *|[A-Z]{1}[a-z]+ *: *|^[A-Za-z]+: *)"
 
         names = re.findall(NAME_REGEXP, self._contents)
         # dialogues from different people preceeded with -
