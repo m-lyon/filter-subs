@@ -139,7 +139,7 @@ class Subtitle:
         self._remove_lone_symbols()
         self._contents_to_str()
         # Remove multi-line brackets
-        self._contents = re.sub(r'[\(\[][\S\s]*[\)\]][\s:]*', '', self._contents)
+        self._contents = re.sub(r'[\*\(\[][\S\s]*[\*\)\]][\s:]*', '', self._contents)
         self._filter_empty()
 
     def replace_names(self):
@@ -178,6 +178,11 @@ class Subtitle:
             if author_str in self._contents.lower():
                 self.index = 0
                 break
+
+    def remove_asterisks(self):
+        '''Removes line if it contains only an asterisk and/or whitespace'''
+        self._contents = re.sub(r'^[\*\s]*$', '', self._contents)
+        self._filter_empty()
 
     def fix_italics(self):
         '''Fixes lone <i> or </i> tags, and removes empty <i> tags, and empty dashes'''
@@ -282,6 +287,8 @@ class Subtitles:
         # Filter contents
         if kw.get('rm_fonts', True):
             any(map(lambda sub: sub.remove_font_colours(), self.subtitles))
+        if kw.get('rm_ast', True):
+            any(map(lambda sub: sub.remove_asterisks(), self.subtitles))
         if kw.get('rm_music', True):
             any(map(lambda sub: sub.remove_music(), self.subtitles))
         if kw.get('rm_effects', True):
