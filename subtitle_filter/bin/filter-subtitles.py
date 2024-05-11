@@ -11,7 +11,6 @@ def run(args):
     subs = Subtitles(args.sub_fpath)
     subs.filter(
         rm_fonts=args.rm_fonts,
-        rm_ast=args.rm_ast,
         rm_music=args.rm_music,
         rm_effects=args.rm_effects,
         rm_names=args.rm_names,
@@ -61,13 +60,6 @@ if __name__ == '__main__':
         default=True,
         action='store_false',
         help='Do not remove font tags from subtitles.',
-    )
-    ap.add_argument(
-        '--keep-ast',
-        dest='rm_ast',
-        default=True,
-        action='store_false',
-        help='Do not remove subtitles containing asterisks: (*).',
     )
     ap.add_argument(
         '--keep-music',

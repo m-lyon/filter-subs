@@ -1,4 +1,5 @@
 '''Subtitle test cases'''
+
 import unittest
 
 from os.path import join, dirname
@@ -33,7 +34,7 @@ class SubtitleFilterSoundEffectsTestCase(unittest.TestCase):
         self.subs_before = Subtitles(join(DATA_DIR, 'subtitle_sound_effects_before.srt'))
         self.subs_after = Subtitles(join(DATA_DIR, 'subtitle_sound_effects_after.srt'))
 
-    def test_subtitle_brackets(self):
+    def test_subtitle_sound_effects(self):
         self.subs_before.filter()
         self.assertEqual(self.subs_before, self.subs_after)
 
@@ -126,6 +127,7 @@ class SubtitleHoursTestCase(unittest.TestCase):
     def test_hours(self):
         self.subs_before.filter()
         self.assertEqual(self.subs_before, self.subs_after)
+
 
 class SubtitleApostrophe(unittest.TestCase):
     def setUp(self):

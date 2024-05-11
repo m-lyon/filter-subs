@@ -1,4 +1,5 @@
 '''Module containing Subtitle and Subtitles classes'''
+
 import os
 import re
 
@@ -110,11 +111,6 @@ class Subtitle:
         self._contents = re.sub(r'\<font(.*)\>(.*)\</font\>', '', self._contents, flags=re.DOTALL)
         self._filter_empty()
 
-    def remove_asterisks(self):
-        '''Removes lines if there is an asterisk lurking about'''
-        if '*' in self._contents:
-            self.index = 0
-
     def remove_music(self):
         '''Removes music symbols from contents'''
         # Remove music symbol behaving as parenthesis
@@ -136,7 +132,7 @@ class Subtitle:
             # them in one regex expression will yield errors for forward slash within italics
             # tag when used with square brackets/parenthesis. e.g line 8 of
             # subtitle_sound_effects_before.srt
-            for prefix, suffix in (('(', ')'), ('[', ']'), ('/', '/')):
+            for prefix, suffix in (('(', ')'), ('[', ']'), ('/', '/'), ('*', '*')):
                 self._contents[idx] = re.sub(
                     rf'[\{prefix}][\S ]*[\{suffix}][\s:]*', '', self._contents[idx]
                 )
@@ -162,14 +158,16 @@ class Subtitle:
             original_match = match.string[start:end]
 
             def is_hour():
-                hour_candidate = match.string[start:end+2].strip()
-                assert ":" in hour_candidate, "it has to have a ':' character because it was matched by a regexp"
+                hour_candidate = match.string[start : end + 2].strip()
+                assert (
+                    ":" in hour_candidate
+                ), "it has to have a ':' character because it was matched by a regexp"
                 lhs, rhs = hour_candidate.split(":")
-                return rhs and lhs and len(lhs) <= 2 and "".join([lhs,rhs]).isnumeric()
+                return rhs and lhs and len(lhs) <= 2 and "".join([lhs, rhs]).isnumeric()
 
             return original_match if is_hour() else replacement
 
-        self._contents = re.sub( NAME_REGEXP, replace_if_not_hour, self._contents).lstrip()
+        self._contents = re.sub(NAME_REGEXP, replace_if_not_hour, self._contents).lstrip()
         # TODO: would it make sense to make a context manager and do this on exit and expose all the high level methods
         # in said context manager?
         self._filter_empty()
@@ -284,8 +282,6 @@ class Subtitles:
         # Filter contents
         if kw.get('rm_fonts', True):
             any(map(lambda sub: sub.remove_font_colours(), self.subtitles))
-        if kw.get('rm_ast', True):
-            any(map(lambda sub: sub.remove_asterisks(), self.subtitles))
         if kw.get('rm_music', True):
             any(map(lambda sub: sub.remove_music(), self.subtitles))
         if kw.get('rm_effects', True):
