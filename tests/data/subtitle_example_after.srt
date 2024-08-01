@@ -25,8 +25,8 @@ Guh
 
 7
 00:02:45,238 --> 00:02:46,904
-- Wait, wait, wait!
+Wait, wait, wait!
 
 8
 00:00:57,088 --> 00:00:58,788
-- <i>And not me?</i>
+<i>And not me?</i>

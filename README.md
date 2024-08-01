@@ -1,14 +1,17 @@
 # subtitle-filter
+
 [![PyPI version](https://badge.fury.io/py/subtitle-filter.svg)](https://badge.fury.io/py/subtitle-filter)
 
 Filter `.srt` subtitle files to remove SDH (Deaf or Hard-of-Hearing) entries and other tags.
 
 ## Installation
-```
+
+```bash
 pip install subtitle-filter
 ```
 
 ## Usage
+
 `subtitle-filter` can be used either as a script or a module.
 
 By default, this module filters the following (in order):
@@ -21,29 +24,36 @@ By default, this module filters the following (in order):
 6. Removes author tags e.g. `XoXo Subtitles by PwnedDude967 XoXo`.
 7. Fixes erroneous comma spacing, e.g. `Hey , what's up? Nothing,my man` to `Hey, what's up? Nothing, my man`.
 8. Removes lone symbols such as `?`, `-`, `#`, `_`.
+9. Remove leading dashes `-` if there is only one line present.
 
 ### Script Usage
+
 Bring up the help display:
+
 ```bash
 filter-subtitles.py -h
 ```
 
 Filter a subtitle in place (overwrites original subtitle) with default options.
+
 ```bash
 filter-subtitles.py -s /path/to/sub.srt
 ```
 
 Instead of saving to disk, print the output.
+
 ```bash
 filter-subtitles.py -s /path/to/sub.srt -p
 ```
 
 Save the output to a different filepath.
+
 ```bash
 filter-subtitles.py -s /path/to/sub.srt -o /path/to/outsub.srt
 ```
 
 Custom filter flags.
+
 ```
 --keep-fonts          Do not remove font tags and text contained within.
 --keep-ast            Do not remove subtitles containing asterisks: (*).
@@ -52,10 +62,14 @@ Custom filter flags.
                         () or brackets []
 --keep-names          Do not replace names in CAPITALS with "-" tags
 --keep-author         Do not remove author tags, eg. Subtitles by some guy.
+--keep-lone-dashes    Do not remove the dash if only one dashed line is present.
+--keep-commas         Do not fix comma spacings.
 ```
 
 ### Module Usage
+
 Filter a subtitle in place (overwrites original subtitle) with default options
+
 ```python
 from subtitle_filter import Subtitles
 
@@ -63,16 +77,21 @@ subs = Subtitles('/path/to/sub.srt')
 subs.filter()
 subs.save()
 ```
+
 Instead of saving to disk, print the output.
+
 ```python
 subs.print()
 ```
+
 Save the output to a different filepath.
+
 ```python
 subs.save('/path/to/newsub.srt')
 ```
 
 Use custom filter flags.
+
 ```python
 subs.filter(
     rm_fonts=True,

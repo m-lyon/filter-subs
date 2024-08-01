@@ -145,9 +145,8 @@ class Subtitle:
     def replace_names(self):
         '''Replace names in all caps'''
         # Care is taken here to preserve genuine sentences with a colon.
-        NAME_REGEXP = r"([A-Z0-9 ][A-Z0-9' ]*: *|[A-Z]{1}[a-z]+ *: *|^[A-Za-z]+: *)"
-
-        names = re.findall(NAME_REGEXP, self._contents)
+        name_regex = r"((?=.*[A-Z])[A-Z0-9 ][A-Z0-9' ]*: *|[A-Z]{1}[a-zA-Z ]+ *: *|^[A-Za-z]+: *)"
+        names = re.findall(name_regex, self._contents)
         # dialogues from different people preceeded with -
         # TODO: does this cover the case where the names are the same?
         replacement = '- ' if len(names) > 1 else ''
@@ -167,7 +166,7 @@ class Subtitle:
 
             return original_match if is_hour() else replacement
 
-        self._contents = re.sub(NAME_REGEXP, replace_if_not_hour, self._contents).lstrip()
+        self._contents = re.sub(name_regex, replace_if_not_hour, self._contents).lstrip()
         # TODO: would it make sense to make a context manager and do this on exit and expose all the high level methods
         # in said context manager?
         self._filter_empty()
@@ -209,6 +208,12 @@ class Subtitle:
         if len(self.contents) == 0:
             self.index = 0
         self._contents_to_str()
+
+    def remove_single_dash(self):
+        '''Removes single dashes from contents'''
+        if re.match(r'^[^\n]*$', self._contents):
+            self._contents = re.sub(r'(?m)^\s*-\s*(.*)$', r'\1', self._contents)
+        self._filter_empty()
 
 
 class Subtitles:
@@ -299,6 +304,8 @@ class Subtitles:
             any(map(lambda sub: sub.remove_author(), self.subtitles))
         if kw.get('fix_commas', True):
             any(map(lambda sub: sub.fix_comma_spaces(), self.subtitles))
+        if kw.get('rm_lone_dashes', True):
+            any(map(lambda sub: sub.remove_single_dash(), self.subtitles))
         any(map(lambda sub: sub.fix_italics(), self.subtitles))
         # Remove filtered items from list
         self.subtitles[:] = [sub for sub in self.subtitles if sub.index]

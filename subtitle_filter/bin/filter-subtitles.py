@@ -16,6 +16,7 @@ def run(args):
         rm_effects=args.rm_effects,
         rm_names=args.rm_names,
         rm_author=args.rm_author,
+        rm_lone_dashes=args.rm_lone_dashes,
         fix_commas=args.fix_commas,
     )
 
@@ -96,6 +97,13 @@ if __name__ == '__main__':
         default=True,
         action='store_false',
         help='Do not remove author tags, eg. Subtitles by some guy.',
+    )
+    ap.add_argument(
+        '--keep-lone-dashes',
+        dest='rm_lone_dashes',
+        default=True,
+        action='store_false',
+        help='Do not remove lone dashes from subtitles.',
     )
     ap.add_argument(
         '--keep-commas',

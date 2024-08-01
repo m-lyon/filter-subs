@@ -8,4 +8,4 @@ Again.
 
 3
 00:02:45,238 --> 00:02:46,904
-- Wait, wait, wait!
+Wait, wait, wait!

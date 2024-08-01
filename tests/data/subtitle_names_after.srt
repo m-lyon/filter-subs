@@ -13,18 +13,23 @@ Gooby pls...
 <i> most of that</i>
 
 4
-00:03:06,139 --> 00:03:07,639
-Heres what you need: an egg.
-
-5
 00:00:05,377 --> 00:00:06,378
 No.
 
-6
+5
 00:03:32,296 --> 00:03:34,840
 Regular text.
 
-7
+6
 00:00:55,296 --> 00:00:58,931
 Cop cuties,
 cute and on duty
+
+7
+00:07:40,362 --> 00:07:44,153
+Born in humble circumstances
+in Dundee, Scotland,
+
+8
+00:16:06,299 --> 00:16:08,802
+See? Hebrews 13:4.
