@@ -255,11 +255,14 @@ class Subtitles:
         return ext
 
     def _get_line_list(self):
-        if has_bom(self.filepath):
-            with open(self.filepath, 'r', encoding='utf-8-sig') as fdata:
+        encoding = 'utf-8-sig' if has_bom(self.filepath) else 'utf-8'
+        try:
+            with open(self.filepath, 'r', encoding=encoding) as fdata:
                 line_list = fdata.readlines()
-        else:
-            with open(self.filepath, 'r', encoding='utf-8') as fdata:
+        except UnicodeDecodeError:
+            # Legacy subtitles are commonly Windows-1252 / ISO-8859-1.
+            # Reading with cp1252 and saving re-emits the file as utf-8.
+            with open(self.filepath, 'r', encoding='cp1252') as fdata:
                 line_list = fdata.readlines()
         line_list_filtered = [x.rstrip() for x in line_list]
         return line_list_filtered
